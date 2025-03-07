@@ -2,11 +2,13 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-@app.route("/callback", methods=["POST"])
+@app.route("/callback", methods=["GET"])
 def callback():
-    data = request.json
-    print("Received:", data)
-    return "Success", 200
+    auth_code = request.args.get("code")
+    if auth_code:
+        return f"Authorization code received: {auth_code}"
+    else:
+        return "No authorization code found", 400
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+    app.run()
