@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, redirect
 
 app = Flask(__name__)
@@ -20,13 +21,12 @@ def login():
 
 @app.route("/callback")
 def callback():
-    """Handle OAuth callback and exchange code for access token."""
+    """Handle OAuth callback."""
     auth_code = request.args.get("code")
     if not auth_code:
         return "❌ Error: Authorization code not found.", 400
     return f"✅ Authorization Code: {auth_code}"
 
 if __name__ == "__main__":
-    import os
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 10000))  # Render assigns a port
     app.run(host="0.0.0.0", port=port)
